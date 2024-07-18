@@ -4,9 +4,19 @@ import { Button } from "@/components/ui/button";
 import { KeyRound } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export default function page() {
-  const handleLoginWithOAuth = (provider: "github" | "google") => {};
+  const handleLoginWithOAuth = (provider: "github" | "google") => {
+    const supabase = supabaseBrowser();
+
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: location.origin + "/auth/callback",
+      },
+    });
+  };
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
